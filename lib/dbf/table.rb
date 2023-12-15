@@ -188,6 +188,10 @@ module DBF
       return nil if deleted_record?
 
       record_data = @data.read(record_length)
+
+      # Return nil is safe for some empty rows in the middle of the file
+      return nil if record_data.nil?
+
       DBF::Record.new(record_data, columns, version, @memo)
     end
 
